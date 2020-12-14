@@ -1,0 +1,30 @@
+ * {
+         margin: 0;
+         padding: 0;
+         box-sizing: border-box;
+       }
+
+       html,
+       body {
+         height: 100%;
+       }
+
+       body {
+         -webkit-font-smoothing: antialiased;
+         background: #98c9e7;
+         font-family: "Times New Roman", Times, serif;
+       }
+
+       #coins div+div {
+         border-top: 0.8px solid #3557868f;
+       }
+
+       nav {
+         font-weight: bold;
+         color: rgba(1, 1, 22, 0.89);
+         font-size: 30px;
+       }
+
+       .media-body h5 {
+         color: rgb(6, 6, 77);
+       }
