@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">            
+    <title>CoinMarketCap</title>
+    <link rel="stylesheet" type="text/css" 
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="img/coin..png">
+</head>
+<body>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item text-uppercase" aria-current="page">
+            Coin Market Cap
+          </li>
+        </ol>
+      </nav>
+      <main>
+        <div class="d-flex p-3 bd-highlight">
+          <div id="coins"></div>
+        </div>
+      </main>
+    <script type="text/javascript">
+    
+        var apiKey = {
+            key: '007adab2-19f1-4b38-8e9b-6b797172d263'
+        }
+
+ 
+      //GET Fetch Requisition
+      fetch(
+        "https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?CMC_PRO_API_KEY=" +
+          apiKey.key
+      )
+        .then((response) => {
+          if (!response.ok)
+            throw new Error(
+              "Erro ao executar a requisição! Status " + response.status
+            );
+          return response.json();
+        })
+        .then((api) => {
+          let texto = "";
+          // Get 10 coins, symbols and first historical date
+          for (let i = 0; i < 10; i++) {
+            //First historical date
+            const { first_historical_data } = api.data[i];
+            let [newDate] = first_historical_data.split("T");
+            newDate = newDate.split("-");
+            newDate = `${newDate[2]}/${newDate[1]}/${newDate[0]}`;
+
+            //Show api information
+            texto += `   
+                    <div class="media">
+                        <img src="./images/coin.jpg" class="align-self-center mr-3" alt="coin" width="100" height="80">
+                        <div class="media-body">
+                        <h5 class="mt-2">${api.data[i].name}</h5>
+                        <p>${api.data[i].symbol}<br>
+                         First historical data: ${newDate}
+                         </p>
+                        </div>
+                    </div>     
+                    `;
+            document.getElementById("coins").innerHTML = texto;
+          }
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    </script>
+  </body>
+</html>
